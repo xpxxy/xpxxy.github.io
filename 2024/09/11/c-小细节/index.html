@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ZH-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/source/images/favicon.ico">
+  
+  <title>c++小细节 | xpxxy的博客</title>
+  
+  <meta name="author" content="xpxxy" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="C++" />
+  
+  <meta name="description" content="cpp小细节1. 简单的文件实例12345678910111213141516171819&#x2F;&#x2F;头文件#include&lt;iostream&gt;&#x2F;&#x2F;告诉编译器使用std命名空间using namespace std;&#x2F;&#x2F;程序开始的地方&#x2F;&#x2F;主函数int main()&#123;&#x2F;&#x2F;你的代码写这里		&#x2F;&#x2F;输出函数	cout &lt;&lt; &quot;Hello World&quot; ;	&#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++小细节">
+<meta property="og:url" content="http://example.com/2024/09/11/c-%E5%B0%8F%E7%BB%86%E8%8A%82/index.html">
+<meta property="og:site_name" content="xpxxy的博客">
+<meta property="og:description" content="cpp小细节1. 简单的文件实例12345678910111213141516171819&#x2F;&#x2F;头文件#include&lt;iostream&gt;&#x2F;&#x2F;告诉编译器使用std命名空间using namespace std;&#x2F;&#x2F;程序开始的地方&#x2F;&#x2F;主函数int main()&#123;&#x2F;&#x2F;你的代码写这里		&#x2F;&#x2F;输出函数	cout &lt;&lt; &quot;Hello World&quot; ;	&#x2F;&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/11/c-%E5%B0%8F%E7%BB%86%E8%8A%82/images/1.jpg">
+<meta property="article:published_time" content="2024-09-11T12:26:16.000Z">
+<meta property="article:modified_time" content="2024-09-11T12:41:38.130Z">
+<meta property="article:author" content="xpxxy">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/11/c-%E5%B0%8F%E7%BB%86%E8%8A%82/images/1.jpg">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/aplayer@1.10.1/dist/APlayer.min.css"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="/vendors/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.png');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg1.jpg');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                        
+                                            <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                        
+                                    
+                                        
+                                            <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                        
+                                    
+                                        
+                                            <li>
+                                                <a><i class="fa fa-link"></i>链接</a>
+                                                <ul class="sub-menu">
+                                                    
+                                                        
+                                                    
+                                                        
+                                                            <li><a target="_blank" rel="noopener" href="https://github.com/xpxxy">作者github</a></li>
+                                                        
+                                                    
+                                                </ul>
+                                            </li>
+                                        
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">xpxxy的博客</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>xpxxy的博客</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/11/c-%E5%B0%8F%E7%BB%86%E8%8A%82/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">c++小细节</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2024-09-11T12:26:16.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2024-09-11</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">xpxxy</span>
+                </li>
+                
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~2.75K
+                        
+                        字
+                    </li>
+                
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1726058498130"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+                <div class="kratos-post-inner-toc toc-div-class" >
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#cpp%E5%B0%8F%E7%BB%86%E8%8A%82"><span class="toc-number">1.</span> <span class="toc-text">cpp小细节</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%87%E4%BB%B6%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1. 简单的文件实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9C%89%E5%85%B3static%E7%9A%84%E4%BA%8B%E6%83%85"><span class="toc-number">1.2.</span> <span class="toc-text">2.有关static的事情</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-std-endl"><span class="toc-number">1.3.</span> <span class="toc-text">3.std::endl</span></a></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><h1 id="cpp小细节"><a href="#cpp小细节" class="headerlink" title="cpp小细节"></a>cpp小细节</h1><h2 id="1-简单的文件实例"><a href="#1-简单的文件实例" class="headerlink" title="1. 简单的文件实例"></a>1. 简单的文件实例</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//头文件</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//告诉编译器使用std命名空间</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//程序开始的地方</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//你的代码写这里</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">//输出函数</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Hello World&quot;</span> ;</span><br><span class="line">	<span class="comment">//终止</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="2-有关static的事情"><a href="#2-有关static的事情" class="headerlink" title="2.有关static的事情"></a>2.有关static的事情</h2><p><strong><code>static</code></strong> 关键字可用于在全局范围、命名空间范围和类范围声明变量和函数。 静态变量还可在本地范围声明。</p>
+<p>静态持续时间意味着，在程序启动时分配对象或变量，并在程序结束时释放对象或变量。 外部链接意味着，变量的名称在用于声明变量的文件的外部是可见的。 相反，内部链接意味着，名称在用于声明变量的文件的外部是不可见的。 默认情况下，在全局命名空间中定义的对象或变量具有静态持续时间和外部链接。 在以下情况下，可使用 <strong><code>static</code></strong> 关键字。</p>
+<ol>
+<li><p>在文件范围（全局和&#x2F;或命名空间范围）内声明变量或函数时，**<code>static</code>** 关键字将指定变量或函数具有内部链接。 在声明变量时，变量具有静态持续时间，并且除非您指定另一个值，否则编译器会将变量初始化为 0。</p>
+</li>
+<li><p>在函数中声明变量时，**<code>static</code>** 关键字将指定变量将在对该函数的调用中保持其状态。</p>
+</li>
+<li><p>在类声明中声明数据成员时，**<code>static</code>** 关键字将指定类的所有实例共享该成员的一个副本。 必须在文件范围内定义 <code>static</code> 数据成员。 声明为 <strong><code>const static</code></strong> 的整型数据成员可以有初始化表达式。</p>
+</li>
+<li><p>在类声明中声明成员函数时，**<code>static</code>** 关键字将指定类的所有实例共享该函数。 由于函数没有隐式 <strong><code>this</code></strong> 指针，因此 <code>static</code> 成员函数不能访问实例成员。 若要访问实例成员，请使用作为实例指针或引用的参数来声明函数。</p>
+</li>
+<li><p>不能将 <code>union</code> 的成员声明为 **<code>static</code>**。 但是，全局声明的匿名 <code>union</code> 必须是显式声明的 **<code>static</code>**。</p>
+<p>详情查看<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/cpp/storage-classes-cpp?view=msvc-170">Microsoft Docs static关键字</a></p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">//static 用于声明只在当前翻译单元运行的函数（当前cpp文件）</span><br><span class="line">假设声明了一个函数，但该函数没有被link到，直接注释它编译器会报错但是，设置为static即可</span><br><span class="line"></span><br><span class="line">//</span><br><span class="line">文件1 log.cpp</span><br><span class="line"></span><br><span class="line">#include &lt;isotream&gt;</span><br><span class="line"></span><br><span class="line">//函数名特意打错</span><br><span class="line">void logr(const char* message)</span><br><span class="line">&#123;</span><br><span class="line">	std::cout &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//文件2 main.cpp</span><br><span class="line"></span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">//函数名对不上</span><br><span class="line">void log(const char* message);</span><br><span class="line"></span><br><span class="line">static int Multply(int a, int b)</span><br><span class="line">&#123;</span><br><span class="line">	log(&quot;Multply&quot;);</span><br><span class="line">	return a * b；</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> 	std::cout&lt;&lt; Multply(5,8) &lt;&lt; std::endl;</span><br><span class="line"> 	std::cin,get();</span><br><span class="line">&#125;</span><br><span class="line">//直接编译当然会报错，在不写static的情况下对使用到该函数的Multply注释也会报错(链接错误)，</span><br><span class="line">//编译器log放到待重定位的符号表中了，链接是对这个表进行搜索的，如果编译优化掉链接就没问题了</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-std-endl"><a href="#3-std-endl" class="headerlink" title="3.std::endl"></a>3.std::endl</h2><p>“\n” 表示内容为一个回车符的字符串。std::endl 是流操作，输出的作用和输出 “\n” 类似，但可能略有区别。<br>std::endl 输出一个换行符，并立即刷新缓冲区。</p>
+<p>例如</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::cout &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
+
+<p>其相当于：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::cout &lt;&lt; <span class="string">&#x27;\n&#x27;</span> &lt;&lt; std::flush;</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::cout &lt;&lt; <span class="string">&#x27;\n&#x27;</span> ; std::<span class="built_in">fflush</span>(stdcout) <span class="comment">//清空输入缓存区</span></span><br></pre></td></tr></table></figure>
+
+<p>由于流操作符 &lt;&lt; 的重载，对于 ‘\n’ 和 “\n”，输出效果相同。对于有输出缓冲的流（例如cout、clog），如果不手动进行缓冲区刷新操作，将在缓冲区满后自动刷新输出。不过对于 cout 来说（相对于文件输出流等），缓冲一般体现得并不明显。但是必要情况下使用 endl 代替 ‘\n’ 一般是个好习惯。对于无缓冲的流（例如标准错误输出流cerr），刷新是不必要的，可以直接使用 ‘\n’。</p>
+<p>关于fflush:</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/stpeace/article/details/9063293">参考解释1</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/dsli123/article/details/38530681">参考解释2</a></p>
+<p>不过在没有必要刷新输出流的时候应尽量使用 cout &lt;&lt; ‘\n’, 过多的 endl 是影响程序执行效率低下的因素之一。<br>其实这样也可以解决很多的问题，比如用户输入错误啊之类的，这样不管别人怎么输入，前面的东西全都没了，不会影响后面的输入。注意，这里只是将缓冲区给清空了，不会对你的程序产生影响，除了时间上，反倒是在某种意义上来说提高了程序的容错性。</p>
+<p>如果想显示多行文本，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;........\n&quot;</span></span><br><span class="line">         &lt;&lt; <span class="string">&quot;Hello, World! \n&quot;</span></span><br><span class="line">         &lt;&lt; <span class="string">&quot;Welcome to C++ \n&quot;</span></span><br><span class="line">         &lt;&lt; <span class="string">&quot;........\N&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不用一直这样 cout 多行插入。<br>真正的开发过程中， 尽量避免使用 <em>using namespace std;</em> 等直接引入整个命名空间，否则会因为命名空间污染导致很多不必要的问题， 比如自己写的某个函数，名称正好和 std 中的一样， 编译器会不知道使用哪一个， 引起编译报错， 建议使用:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::cout &lt;&lt; <span class="string">&quot;Hello World&quot;</span> &lt;&lt; std::endl</span><br></pre></td></tr></table></figure>
+
+<p>等直接由命名空间组合起来的全称。</p>
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2024/09/11/c-%E5%B0%8F%E7%BB%86%E8%8A%82/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2024/09/11/c-%E5%B0%8F%E7%BB%86%E8%8A%82/";
+            const title         = "「c++小细节」";
+            const excerpt       = `cpp小细节1. 简单的文件实例12345678910111213141516171819//头文件#include&lt;iostream&gt;//告诉编译器使用std命名空间using namespace std;//程序开始的...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/C/" rel="tag">C++</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2024-09-11T12:41:38.130Z" itemprop="dateModified">最后编辑：2024-09-11</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 网站介绍" href="/2024/09/07/网站介绍/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" iconpark" href="/2024/09/11/iconpark/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.jpg" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                4
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                2
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix toc-div-class" >
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#cpp%E5%B0%8F%E7%BB%86%E8%8A%82"><span class="toc-text">cpp小细节</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%87%E4%BB%B6%E5%AE%9E%E4%BE%8B"><span class="toc-text">1. 简单的文件实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9C%89%E5%85%B3static%E7%9A%84%E4%BA%8B%E6%83%85"><span class="toc-text">2.有关static的事情</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-std-endl"><span class="toc-text">3.std::endl</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%99%E7%A8%8B/">教程</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/C/" style="font-size: 0.6em;">C++</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/iconpark/" style="font-size: 0.6em;">iconpark</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" style="font-size: 0.6em;">基础介绍</a> <a href="/tags/%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/" style="font-size: 0.6em;">字体图标</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.6em;">教程</a> <a href="/tags/%E7%BD%91%E7%AB%99%E7%AE%A1%E7%90%86/" style="font-size: 0.6em;">网站管理</a> <a href="/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E4%BA%8B/" style="font-size: 0.6em;">随笔记事</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2024/09/11/notes/"><i class="fa  fa-book"></i> 随手记事</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2024/09/11/iconpark/"><i class="fa  fa-book"></i> iconpark</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2024/09/11/c-%E5%B0%8F%E7%BB%86%E8%8A%82/"><i class="fa  fa-book"></i> c++小细节</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2024/09/07/%E7%BD%91%E7%AB%99%E4%BB%8B%E7%BB%8D/"><i class="fa  fa-book"></i> 网站介绍</a>
+            
+          
+        
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        <!-- Keep for compatibility -->
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <!-- New links -->
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2024 xpxxy的博客 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by xpxxy.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="/vendors/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="/vendors/meting@2.0.1/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="876454618"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
